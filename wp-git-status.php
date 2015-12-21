@@ -25,14 +25,17 @@ function wpgs_git_rev( $path ) {
  * Get git info
  */
 function wpgs_get_git_info() {
-	$theme_directory   = exec( 'cd ' . get_stylesheet_directory() . ' && pwd 2>&1' );
-	$git = $theme_directory.'/.git';
+	$theme_directory = exec( 'cd ' . get_stylesheet_directory() . ' && pwd 2>&1' );
+	$git             = $theme_directory . '/.git';
+	$git_index       = $git . '/index';
 
-	// Check if git is present
-	if(file_exists($git)){
-		return wp_get_theme() . ': ' . str_replace("\n", ' ', wpgs_git_rev( $theme_directory ));
+	// Check if commits are present
+	if(file_exists($git_index)){
+		return wp_get_theme() . ': <strong style="font-family:monospace">' . wpgs_git_rev( $theme_directory ) . '</strong>';
+	} elseif(file_exists($git)) {
+		return wp_get_theme() . ': no commit history';
 	} else {
-		return wp_get_theme() . ': git not present';
+		return wp_get_theme() . ': no git found';
 	}
 }
 
