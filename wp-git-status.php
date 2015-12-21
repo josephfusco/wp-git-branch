@@ -3,7 +3,7 @@
 Plugin Name:    WP Git Status
 Plugin URI:     http://github.com/josephfusco/git-status/
 Description:    Show theme and/or plugin git branch and commit hash in the admin bar.
-Version:        0.0.1
+Version:        1.0.0
 Author:         Joseph Fusco
 Author URI:     http://josephfus.co/
 License:        GPLv2 or later
@@ -14,6 +14,7 @@ if ( !defined( 'ABSPATH' ) )
 
 add_action( 'admin_menu', 'wpgs_add_admin_menu' );
 add_action( 'admin_init', 'wpgs_settings_init' );
+add_action( 'admin_bar_menu', 'git_info', 900 );
 
 /**
  *
@@ -32,6 +33,18 @@ function wpgs_get_themes() {
 		}
 	}
 	return $themes;
+}
+
+/**
+ *
+ * Get git info
+ *
+ */
+function wpgs_git_info() {
+	$active_theme      = wp_get_theme();
+	$active_theme_name = $active_theme->get( 'Name' );
+	$dir_plugins       = exec( 'cd ' . WP_CONTENT_DIR . '/plugins/ && pwd 2>&1' );
+	$dir_themes        = exec( 'cd ' . WP_CONTENT_DIR . '/themes/ && pwd 2>&1' );
 }
 
 /**
@@ -101,10 +114,22 @@ function wpgs_options_page() {
 		settings_fields( 'pluginPage' );
 		do_settings_sections( 'pluginPage' );
 		submit_button();
-		$options = get_option( 'wpgs_settings' );
-		echo '<pre>'.print_r($options).'</pre>';
 		?>
 
 	</form>
 	<?php
+}
+
+/**
+ *
+ * Add git info to admin bar
+ *
+ */
+function git_info($wp_admin_bar) {
+	$args = array(
+		'id'     => 'git_status',
+		'title'	=>	'Git Status',
+		'meta'   => array( 'class' => 'first-toolbar-group' ),
+	);
+	$wp_admin_bar->add_node( $args );
 }
