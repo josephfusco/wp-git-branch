@@ -6,7 +6,7 @@ Tested up to: 4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Show theme/plugin git branch and hash in the admin bar.
+Show active theme git branch and commit hash in the admin bar.
 
 == Description ==
-Shows git branch and commit hash in the admin bar.
+Shows active themes git branch and commit hash in the admin bar.

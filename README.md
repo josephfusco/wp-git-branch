@@ -1,3 +1,3 @@
 # WP Git Status
 
-A WordPress plugin that shows theme/plugin git branch and commit hash in the admin bar.
+A WordPress plugin made for theme development that shows the active themes git branch and commit hash in the admin bar.
