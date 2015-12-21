@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name:	WP Git Status
+Plugin Name:		WP Git Status
 Plugin URI:		http://github.com/josephfusco/git-status/
-Description:	Shows git branch and commit hash in the admin bar.
+Description:		Shows git branch and commit hash in the admin bar.
 Version:		0.0.1
 Author:			Joseph Fusco
 Author URI:		http://josephfus.co/
