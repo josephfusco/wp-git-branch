@@ -1,0 +1,19 @@
+{
+  "name": "josephfusco/wp-git-status",
+  "description": "Show active theme git branch and commit hash in the toolbar.",
+  "keywords": ["wordpress", "plugin"],
+  "homepage": "https://github.com/josephfusco/wp-git-status",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Joseph Fusco",
+      "email": "hello@josephfus.co",
+      "homepage": "http://josephfus.co"
+    }
+  ],
+  "type": "wordpress-plugin",
+  "require": {
+    "php": ">=5.3.2",
+    "composer/installers": "v1.0.6"
+  }
+}
