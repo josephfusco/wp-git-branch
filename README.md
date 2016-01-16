@@ -6,4 +6,4 @@ A WordPress plugin made for theme development that shows the active themes git b
 
 ## License
 
-MIT © [Joseph Fusco](http://mit.josephfus.co/?year=2016)
+GPLv2 or later © 2016 [Joseph Fusco](http://josephfus.co/)
