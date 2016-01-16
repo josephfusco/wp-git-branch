@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name:    WP Git Status
-Plugin URI:     http://github.com/josephfusco/git-status/
+Plugin URI:     http://github.com/josephfusco/wp-git-status/
 Description:    Show active theme git branch and commit hash in the toolbar.
 Version:        1.0.0
 Author:         Joseph Fusco
