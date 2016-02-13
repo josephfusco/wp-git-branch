@@ -1,8 +1,8 @@
 {
-  "name": "josephfusco/wp-git-status",
+  "name": "josephfusco/wp-git-branch",
   "description": "Show active theme git branch and commit hash in the toolbar.",
   "keywords": ["wordpress", "plugin", "git"],
-  "homepage": "https://github.com/josephfusco/wp-git-status",
+  "homepage": "https://github.com/josephfusco/wp-git-branch",
   "license": " GPLv2 or later",
   "authors": [
     {
