@@ -62,10 +62,10 @@ function wpgb_get_git_info() {
 function wpgb_git_info( $wp_admin_bar ) {
 	$git_info = wpgb_get_git_info();
 	$args = array(
-		'id'    => 'git-status',
+		'id'    => 'git-branch',
 		'title' => '<span class="ab-icon"></span><span class="ab-label">' . $git_info . '</span>',
 		'meta'  => array(
-            'class' => 'git-status'
+            'class' => 'git-branch'
         )
 	);
 	$wp_admin_bar->add_node( $args );

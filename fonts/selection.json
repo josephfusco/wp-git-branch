@@ -16,7 +16,7 @@
 			},
 			"attrs": [],
 			"properties": {
-				"order": 9,
+				"order": 2,
 				"prevSize": 16,
 				"ligatures": "git, brand80",
 				"name": "git",
@@ -24,13 +24,13 @@
 				"code": 59648
 			},
 			"setIdx": 0,
-			"setId": 0,
-			"iconIdx": 487
+			"setId": 1,
+			"iconIdx": 0
 		}
 	],
 	"height": 1024,
 	"metadata": {
-		"name": "wp-git-status"
+		"name": "wpgb"
 	},
 	"preferences": {
 		"showGlyphs": true,
@@ -40,7 +40,7 @@
 		"fontPref": {
 			"prefix": "icon-",
 			"metadata": {
-				"fontFamily": "wp-git-status",
+				"fontFamily": "wpgb",
 				"majorVersion": 1,
 				"minorVersion": 0
 			},
