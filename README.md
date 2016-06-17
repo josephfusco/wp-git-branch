@@ -10,6 +10,7 @@ This plugin currently requires .git to be located directly within the theme root
 
 # To Do
 
+- [ ] Only load for admins
 - [ ] Allow plugins & themes to be declared via JSON file.
 - [ ] Git status indicator.
 - [ ] Display available local branches and allow branch switching.
