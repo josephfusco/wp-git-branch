@@ -22,6 +22,8 @@ add_action( 'admin_enqueue_scripts', 'wpgb_enqueue' );
  *
  */
 function wpgb_enqueue() {
+	if (!is_super_admin()) return;
+	
 	wp_enqueue_style( 'wpgb-style', plugins_url( '/css/style.css' , __FILE__ ) );
 }
 
@@ -60,6 +62,8 @@ function wpgb_get_git_info() {
  *
  */
 function wpgb_git_info( $wp_admin_bar ) {
+	if (!is_super_admin()) return;
+
 	$git_info = wpgb_get_git_info();
 	$args = array(
 		'id'    => 'git-branch',
