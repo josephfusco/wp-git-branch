@@ -12,9 +12,11 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-add_action( 'admin_bar_menu', 'wpgb_git_info', 900 );
-add_action( 'wp_enqueue_scripts', 'wpgb_enqueue' );
-add_action( 'admin_enqueue_scripts', 'wpgb_enqueue' );
+if ( current_user_can( 'activate_plugin' ) ) {
+	add_action( 'admin_bar_menu', 'wpgb_git_info', 900 );
+	add_action( 'wp_enqueue_scripts', 'wpgb_enqueue' );
+	add_action( 'admin_enqueue_scripts', 'wpgb_enqueue' );
+}
 
 /**
  *
