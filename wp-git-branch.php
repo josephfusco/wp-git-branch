@@ -16,9 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-add_action( 'admin_bar_menu', 'wpgb_git_info', 900 );
 add_action( 'wp_enqueue_scripts', 'wpgb_enqueue' );
 add_action( 'admin_enqueue_scripts', 'wpgb_enqueue' );
+add_action( 'admin_bar_menu', 'wpgb_create_menu', 900 );
 add_action( 'plugins_loaded', 'wpgb_plugin_textdomain' );
 
 /**
@@ -46,10 +46,10 @@ function wpgb_git_rev( $path ) {
  * Get git info
  */
 function wpgb_get_git_info() {
-	$directory       = exec( 'cd ' . get_stylesheet_directory() . ' && pwd 2>&1' );
-	$name            = wp_get_theme();
-	$git             = $directory . '/.git';
-	$git_index       = $git . '/index';
+	$directory = exec( 'cd ' . get_stylesheet_directory() . ' && pwd 2>&1' );
+	$name      = wp_get_theme();
+	$git       = $directory . '/.git';
+	$git_index = $git . '/index';
 
 	// Check if commits are present
 	if ( file_exists( $git_index ) ) {
@@ -66,14 +66,14 @@ function wpgb_get_git_info() {
  *
  * @action admin_bar_menu
  */
-function wpgb_git_info( $wp_admin_bar ) {
+function wpgb_create_menu( $wp_admin_bar ) {
 	if ( ! is_super_admin() ) {
 		return;
 	}
 
 	$git_info = wpgb_get_git_info();
 	$args = array(
-		'id'    => 'git-branch',
+		'id'    => 'wpgb',
 		'title' => '<span class="ab-icon"></span><span class="ab-label">' . $git_info . '</span>',
 		'meta'  => array(
 			'class' => 'git-branch',
