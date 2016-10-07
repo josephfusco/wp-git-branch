@@ -8,6 +8,8 @@
  * Author URI:     http://josephfus.co/
  * License:        GPLv2 or later
  * License URI:    http://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:    wp-git-branch
+ * Domain Path:    /languages
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -17,9 +19,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 add_action( 'admin_bar_menu', 'wpgb_git_info', 900 );
 add_action( 'wp_enqueue_scripts', 'wpgb_enqueue' );
 add_action( 'admin_enqueue_scripts', 'wpgb_enqueue' );
+add_action( 'plugins_loaded', 'wpgb_plugin_textdomain' );
 
 /**
  * Enqueue stylesheet
+ *
+ * @action wp_enqueue_scripts
+ * @action admin_enqueue_scripts
  */
 function wpgb_enqueue() {
 	if ( ! is_super_admin() ) {
@@ -40,22 +46,25 @@ function wpgb_git_rev( $path ) {
  * Get git info
  */
 function wpgb_get_git_info() {
-	$theme_directory = exec( 'cd ' . get_stylesheet_directory() . ' && pwd 2>&1' );
-	$git             = $theme_directory . '/.git';
+	$directory       = exec( 'cd ' . get_stylesheet_directory() . ' && pwd 2>&1' );
+	$name            = wp_get_theme();
+	$git             = $directory . '/.git';
 	$git_index       = $git . '/index';
 
 	// Check if commits are present
 	if ( file_exists( $git_index ) ) {
-		return wp_get_theme() . ': <strong>' . wpgb_git_rev( $theme_directory ) . '</strong>';
+		return $name . ': <strong>' . wpgb_git_rev( $directory ) . '</strong>';
 	} elseif ( file_exists( $git ) ) {
-		return wp_get_theme() . ': no commit history';
+		return $name . ': ' . __( 'no commit history', 'wp-git-branch' );
 	} else {
-		return wp_get_theme() . ': no git found';
+		return $name . ': ' . __( 'no git found', 'wp-git-branch' );
 	}
 }
 
 /**
  * Add git info to toolbar
+ *
+ * @action admin_bar_menu
  */
 function wpgb_git_info( $wp_admin_bar ) {
 	if ( ! is_super_admin() ) {
@@ -73,3 +82,13 @@ function wpgb_git_info( $wp_admin_bar ) {
 
 	$wp_admin_bar->add_node( $args );
 }
+
+/**
+ * Load language files
+ *
+ * @action plugins_loaded
+ */
+function wpgb_plugin_textdomain() {
+	load_plugin_textdomain( 'wp-git-branch', false, basename( dirname( __FILE__ ) ) . '/languages/' );
+}
+
