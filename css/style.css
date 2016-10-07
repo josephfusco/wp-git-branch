@@ -1,16 +1,16 @@
 @font-face {
-    font-family: 'wpgb';
-    src: url('../fonts/wpgb.eot?79hezv');
-    src: url('../fonts/wpgb.eot?79hezv#iefix') format('embedded-opentype'),
-         url('../fonts/wpgb.ttf?79hezv') format('truetype'),
-         url('../fonts/wpgb.woff?79hezv') format('woff'),
-         url('../fonts/wpgb.svg?79hezv#wpgb') format('svg');
-    font-weight: normal;
-    font-style: normal;
+	font-family: 'wpgb';
+	src: url('../fonts/wpgb.eot?79hezv');
+	src: url('../fonts/wpgb.eot?79hezv#iefix') format('embedded-opentype'),
+	     url('../fonts/wpgb.ttf?79hezv') format('truetype'),
+	     url('../fonts/wpgb.woff?79hezv') format('woff'),
+	     url('../fonts/wpgb.svg?79hezv#wpgb') format('svg');
+	font-style: normal;
+	font-weight: normal;
 }
 
 #wpadminbar .git-branch .ab-icon:before {
-    font-family: 'wpgb' !important;
-    content: "\e900" !important;
-    font-size: 16px !important;
+	content: "\e900" !important;
+	font-family: 'wpgb' !important;
+	font-size: 16px !important;
 }
