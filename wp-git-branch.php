@@ -3,7 +3,7 @@
  * Plugin Name:    WP Git Branch
  * Plugin URI:     http://github.com/josephfusco/wp-git-branch/
  * Description:    Show active theme git branch and commit hash in the toolbar.
- * Version:        1.1.1
+ * Version:        1.1.2
  * Author:         Joseph Fusco
  * Author URI:     http://josephfus.co/
  * License:        GPLv2 or later
@@ -16,79 +16,67 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-add_action( 'wp_enqueue_scripts', 'wpgb_enqueue' );
-add_action( 'admin_enqueue_scripts', 'wpgb_enqueue' );
-add_action( 'admin_bar_menu', 'wpgb_create_menu', 900 );
-add_action( 'plugins_loaded', 'wpgb_plugin_textdomain' );
+class WP_Git_Branch {
 
-/**
- * Enqueue stylesheet
- *
- * @action wp_enqueue_scripts
- * @action admin_enqueue_scripts
- */
-function wpgb_enqueue() {
-	if ( ! is_super_admin() ) {
-		return;
+	function __construct() {
+		$this->load_menu();
+		$this->load_styles();
+		$this->load_textdomain();
 	}
 
-	wp_enqueue_style( 'wpgb-style', plugins_url( '/css/style.css' , __FILE__ ) );
-}
+	function load_menu() {
+		add_action( 'admin_bar_menu', array( $this, 'create_menu' ), 900 );
+	}
 
-/**
- * Execute git commands
- */
-function wpgb_git_rev( $path ) {
-	return shell_exec( 'cd ' . $path . ' && git rev-parse --short HEAD && git rev-parse --abbrev-ref HEAD 2>&1' );
-}
+	function load_styles() {
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
+	}
 
-/**
- * Get git info
- */
-function wpgb_get_git_info() {
-	$directory = exec( 'cd ' . get_stylesheet_directory() . ' && pwd 2>&1' );
-	$name      = wp_get_theme();
-	$git       = $directory . '/.git';
-	$git_index = $git . '/index';
+	function load_textdomain() {
+		add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
+	}
 
-	// Check if commits are present
-	if ( file_exists( $git_index ) ) {
-		return $name . ': <strong>' . wpgb_git_rev( $directory ) . '</strong>';
-	} elseif ( file_exists( $git ) ) {
-		return $name . ': ' . __( 'no commit history', 'wp-git-branch' );
-	} else {
-		return $name . ': ' . __( 'no git found', 'wp-git-branch' );
+	function enqueue_styles() {
+		wp_enqueue_style( 'wpgb-style', plugins_url( '/css/style.css' , __FILE__ ) );
+	}
+
+	function create_menu( $wp_admin_bar ) {
+		$git_info = $this->get_git_info();
+
+		$args = array(
+			'id'    => 'wpgb',
+			'title' => '<span class="ab-icon"></span><span class="ab-label">' . $git_info . '</span>',
+			'meta'  => array(
+				'class' => 'git-branch',
+			),
+		);
+
+		$wp_admin_bar->add_node( $args );
+	}
+
+	private function get_git_info() {
+		$directory = get_stylesheet_directory();
+		$name      = wp_get_theme();
+		$git       = $directory . '/.git';
+		$git_index = $git . '/index';
+		$git_rev   = $this->git_rev( $directory );
+
+		if ( file_exists( $git_index ) ) {
+			// If commits are present
+			return $name . ': <strong>' . esc_html( $git_rev ) . '</strong>';
+		} elseif ( file_exists( $git ) ) {
+			// If git exists with no commits
+			return $name . ': ' . __( 'no commit history', 'wp-git-branch' );
+		} else {
+			// If git is not present
+			return $name . ': ' . __( 'no git found', 'wp-git-branch' );
+		}
+	}
+
+	private function git_rev( $path ) {
+		return shell_exec( 'cd ' . $path . ' && git rev-parse --short HEAD && git rev-parse --abbrev-ref HEAD 2>&1' );
 	}
 }
 
-/**
- * Add git info to toolbar
- *
- * @action admin_bar_menu
- */
-function wpgb_create_menu( $wp_admin_bar ) {
-	if ( ! is_super_admin() ) {
-		return;
-	}
-
-	$git_info = wpgb_get_git_info();
-	$args = array(
-		'id'    => 'wpgb',
-		'title' => '<span class="ab-icon"></span><span class="ab-label">' . $git_info . '</span>',
-		'meta'  => array(
-			'class' => 'git-branch',
-		),
-	);
-
-	$wp_admin_bar->add_node( $args );
-}
-
-/**
- * Load language files
- *
- * @action plugins_loaded
- */
-function wpgb_plugin_textdomain() {
-	load_plugin_textdomain( 'wp-git-branch', false, basename( dirname( __FILE__ ) ) . '/languages/' );
-}
-
+$wp_git_branch = new WP_Git_Branch();
